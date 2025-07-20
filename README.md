@@ -1,31 +1,53 @@
-# Oracle APEX HTML Table Export (Excel & PDF)
+# 📄 Generate PDF from HTML in Oracle APEX using html2pdf.js
 
-This project provides JavaScript code to export an HTML table from Oracle APEX to Excel with a dynamic filename (including date and time). Additionally, it includes setup instructions for exporting PDF and validating file upload formats.
-
----
-
-## ✅ Features
-
-- Export HTML table to `.xls` with timestamp in filename
-- File download uses blob creation and triggers automatically
-- Format: `report-YYYY-MM-DD_HH-MMAMPM.xls`
-- Integration guide for Oracle APEX
-- PDF download and file validation (via PL/SQL)
+This guide helps you integrate a **"Download PDF"** feature in your Oracle APEX application using `html2pdf.js`.
 
 ---
 
-## 🔧 APEX Integration (Excel Export)
+## 📁 1. Upload the JavaScript Library
 
-### 1. Upload JavaScript File to APEX
+1. Download the `html2pdf.bundle.min.js` library:
+   👉 https://github.com/eKoopmans/html2pdf
 
-- Go to **Shared Components** > **Static Application Files**
-- Upload `export-table.js`
-- Save the file and copy its **Reference Path**
+2. In Oracle APEX:
+   - Go to **Shared Components** → **Static Application Files**
+   - Click **Upload File**
+   - Upload the file `html2pdf.bundle.min.js`
 
-### 2. Add to Page
+---
 
-In your APEX page:
-- Go to **Page Designer**
-- **Page Attributes** > **JavaScript File URLs** > Add:
-  ```text
-  #APP_IMAGES#export-table.js
+## 🧠 2. Add JavaScript to Page-Level Global Function
+
+1. Go to the page where you want the export feature.
+2. Under **Page Attributes**, scroll to **Function and Global Variable Declaration**.
+3. Paste the following code:
+
+```javascript
+function generatePDF() {
+    var element = document.getElementById('printID'); // Replace with your actual container ID
+
+    var currentDate = new Date();
+
+    var day = ('0' + currentDate.getDate()).slice(-2);
+    var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+    var year = currentDate.getFullYear();
+
+    var hours = currentDate.getHours();
+    var minutes = ('0' + currentDate.getMinutes()).slice(-2);
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    hours = ('0' + hours).slice(-2);
+
+    var filename = 'Invoice-' + day + '-' + month + '-' + year + '_' + hours + '-' + minutes + ampm + '.pdf';
+
+    var opt = {
+        margin: 0.5,
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+}
