@@ -20,8 +20,7 @@ This project provides JavaScript code to export an HTML table from Oracle APEX t
 
 - Go to **Shared Components** > **Static Application Files**
 - Upload `export-table.js`
-- Save the file and copy its **Reference Path**, e.g.  
-  `/apex/f?p=APP_ID:1:::NO::FILE:export-table.js`
+- Save the file and copy its **Reference Path**
 
 ### 2. Add to Page
 
