@@ -1,37 +1,35 @@
-// export-table.js
+function generatePDF() {
+    var element = document.getElementById('printID'); // Replace with your actual container ID
 
-function exportTableToExcel(printId) {
-  var tableHTML = document.getElementById(printId).innerHTML;
+    // Generate timestamp-based filename
+    var currentDate = new Date();
 
-  // Generate current date and time for filename
-  var now = new Date();
-  var day = ('0' + now.getDate()).slice(-2);
-  var month = ('0' + (now.getMonth() + 1)).slice(-2);
-  var year = now.getFullYear();
+    var day = ('0' + currentDate.getDate()).slice(-2);
+    var month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
+    var year = currentDate.getFullYear();
 
-  var hours = now.getHours();
-  var minutes = ('0' + now.getMinutes()).slice(-2);
-  var ampm = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12;
-  hours = hours ? hours : 12;
-  hours = ('0' + hours).slice(-2);
+    var hours = currentDate.getHours();
+    var minutes = ('0' + currentDate.getMinutes()).slice(-2);
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // Handle hour '0' as '12'
+    hours = ('0' + hours).slice(-2);
 
-  var filename = `report-${year}-${month}-${day}_${hours}-${minutes}${ampm}.xls`;
+    // Human-readable display format (optional use)
+    var displayDate = day + '/' + month + '/' + year + ' ' + hours + ':' + minutes + ampm;
 
-  var htmlContent = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head><meta charset="UTF-8"><title>Report</title></head>
-    <body>${tableHTML}</body>
-    </html>`;
+    // Safe filename format (slashes and colons replaced)
+    var filename = 'Invoice-' + day + '-' + month + '-' + year + '_' + hours + '-' + minutes + ampm + '.pdf';
 
-  var blob = new Blob([htmlContent], { type: 'application/vnd.ms-excel' });
-  var url = URL.createObjectURL(blob);
+    // PDF generation options
+    var opt = {
+        margin: 0.5,
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
 
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+    // Generate and trigger download
+    html2pdf().set(opt).from(element).save();
 }
