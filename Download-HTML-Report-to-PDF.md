@@ -52,7 +52,8 @@ function generatePDF() {
     html2pdf().set(opt).from(element).save();
 }
 
-## **4. Trigger via Dynamic Action (Button)**
+----
+## 4.**via Dynamic Action (Button)**
 
   ##Create a Button (e.g., Download PDF).
   ##Create a Dynamic Action:
