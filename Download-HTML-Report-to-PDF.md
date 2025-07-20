@@ -51,7 +51,10 @@ function generatePDF() {
 
     html2pdf().set(opt).from(element).save();
 }
-## 4. 📥 Download PDF via Dynamic Action (Button)
+
+
+
+## 4. 📥 **Download PDF via Dynamic Action (Button)**
 
 ### ✅ Step-by-Step:
 
