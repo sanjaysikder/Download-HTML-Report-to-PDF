@@ -16,7 +16,7 @@ This guide helps you integrate a **"Download PDF"** feature in your Oracle APEX 
 
 ---
 
-## 🧠 2. Add JavaScript to Page-Level Global Function
+## 🧠 2. Add JavaScript to Page-Level Global Variable Function
 
 1. Go to the page where you want the export feature.
 2. Under **Page Attributes**, scroll to **Function and Global Variable Declaration**.
@@ -51,3 +51,13 @@ function generatePDF() {
 
     html2pdf().set(opt).from(element).save();
 }
+
+## **4. Trigger via Dynamic Action (Button)**
+
+  ##Create a Button (e.g., Download PDF).
+  ##Create a Dynamic Action:
+  ##Event: Click
+  ##Selection Type: Button (choose your button)
+
+## **Action: Execute JavaScript Code**
+generatePDF();
