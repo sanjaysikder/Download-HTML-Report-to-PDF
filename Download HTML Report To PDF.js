@@ -1,31 +1,37 @@
-function calculateDOBFromAge(years, months, days) {
-    const today = new Date();
-    let dob = new Date(today);
+// export-table.js
 
-    dob.setFullYear(dob.getFullYear() - parseInt(years || 0));
-    dob.setMonth(dob.getMonth() - parseInt(months || 0));
-    dob.setDate(dob.getDate() - parseInt(days || 0));
+function exportTableToExcel(printId) {
+  var tableHTML = document.getElementById(printId).innerHTML;
 
-    const yyyy = dob.getFullYear();
-    const mm = String(dob.getMonth() + 1).padStart(2, '0');
-    const dd = String(dob.getDate()).padStart(2, '0');
+  // Generate current date and time for filename
+  var now = new Date();
+  var day = ('0' + now.getDate()).slice(-2);
+  var month = ('0' + (now.getMonth() + 1)).slice(-2);
+  var year = now.getFullYear();
 
-    return `${yyyy}-${mm}-${dd}`;
+  var hours = now.getHours();
+  var minutes = ('0' + now.getMinutes()).slice(-2);
+  var ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  hours = ('0' + hours).slice(-2);
+
+  var filename = `report-${year}-${month}-${day}_${hours}-${minutes}${ampm}.xls`;
+
+  var htmlContent = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head><meta charset="UTF-8"><title>Report</title></head>
+    <body>${tableHTML}</body>
+    </html>`;
+
+  var blob = new Blob([htmlContent], { type: 'application/vnd.ms-excel' });
+  var url = URL.createObjectURL(blob);
+
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
-
-// Auto-calculate DOB when year/month/day changes
-apex.jQuery(function($) {
-    function updateDOB() {
-        const y = $v('P1_YEAR');
-        const m = $v('P1_MONTH');
-        const d = $v('P1_DAY');
-
-        if (y !== '' || m !== '' || d !== '') {
-            const dob = calculateDOBFromAge(y, m, d);
-            $s('P1_DOB2', dob);
-        }
-    }
-
-    // Attach change events to each age component
-    $('#P1_YEAR, #P1_MONTH, #P1_DAY').on('change', updateDOB);
-});
