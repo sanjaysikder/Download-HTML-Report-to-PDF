@@ -86,7 +86,7 @@ function generatePDF() {
 - Ensure the element you want to print has the ID `printID`.
 - `html2pdf.js` must be loaded on the page (see section 2 of the documentation for CDN or static file setup).
 - The `generatePDF` function must be declared globally (in Page > JavaScript > Function and Global Variable Declaration).
-- Create a Dynamic Action button click event, call javascript function.
+- Create a Dynamic Action for the button’s click event to call the JavaScript function.
 
 ---
 
