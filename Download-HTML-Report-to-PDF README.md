@@ -1,4 +1,4 @@
-# 📄 Generate PDF from HTML in Oracle APEX using html2pdf.js
+# 📄 Generate PDF from HTML Report in Oracle APEX using JavaScript Library
 
 This guide helps you integrate a **"Download PDF"** feature in your Oracle APEX application using html2pdf.js.
 
@@ -7,22 +7,30 @@ This guide helps you integrate a **"Download PDF"** feature in your Oracle APEX 
 ## 📁 1. Upload the JavaScript Library
 
 1. Download the html2pdf.bundle.min.js library:
-   👉 https://github.com/eKoopmans/html2pdf
+   👉 https://ekoopmans.github.io/html2pdf.js/
 
-2. In Oracle APEX:
+3. In Oracle APEX:
    - Go to **Shared Components** → **Static Application Files**
    - Click **Upload File**
    - Upload the file html2pdf.bundle.min.js
+   - #APP_FILES#html2pdf.bundle.min.js
 
 ---
-
 ## 🧠 2. Add JavaScript to Page-Level Global Variable Function
+
+ - Add This Static File to Page HTML Header.
+```HTML Header
+<script src="#APP_FILES#html2pdf.bundle.min.js"></script>
+```
+
+## 🧠 3. Add JavaScript to Page-Level Global Variable Function
 
 1. Go to the page where you want the export feature.
 2. Under **Page Attributes**, scroll to **Function and Global Variable Declaration**.
 3. Paste the following code:
 
 javascript
+
 function generatePDF() {
     var element = document.getElementById('printID'); // Replace with your actual container ID
 
@@ -54,8 +62,6 @@ function generatePDF() {
 
 
 
-
-
 ## 4. 📥 Download PDF via Dynamic Action (Button)
 
 ### ✅ Step-by-Step:
@@ -80,5 +86,10 @@ function generatePDF() {
 - Ensure the element you want to print has the ID `printID`.
 - `html2pdf.js` must be loaded on the page (see section 2 of the documentation for CDN or static file setup).
 - The `generatePDF` function must be declared globally (in Page > JavaScript > Function and Global Variable Declaration).
+- Create a Dynamic Action button click event, call javascript function.
 
 ---
+
+
+# Thank You
+## Sanjay Sikder
