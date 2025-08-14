@@ -29,7 +29,7 @@ This guide helps you integrate a **"Download PDF"** feature in your Oracle APEX 
 2. Under **Page Attributes**, scroll to **Function and Global Variable Declaration**.
 3. Paste the following code:
 
-javascript
+```javascript
 
 function generatePDF() {
     var element = document.getElementById('printID'); // Replace with your actual container ID
@@ -60,7 +60,7 @@ function generatePDF() {
     html2pdf().set(opt).from(element).save();
 }
 
-
+```
 
 ## 4. 📥 Download PDF via Dynamic Action (Button)
 
